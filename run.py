@@ -87,3 +87,12 @@ def main(offset):
         print(item)
         save_image(item)
 
+GROUP_START = 0
+GROUP_END = 5
+
+if __name__ == '__main__':
+    pool = Pool()
+    groups = ([x * 20 for x in range(GROUP_START, GROUP_END + 1)])
+    pool.map(main, groups)
+    pool.close()
+    pool.join()
