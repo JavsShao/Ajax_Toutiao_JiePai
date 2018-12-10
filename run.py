@@ -45,7 +45,7 @@ def get_images(json):
             images = item.get('image_list')
             for image in images:
                 yield {
-                    'image':'https' + image.get('url'),
+                    'image':'https:' + image.get('url'),
                     'title':title
                 }
 
