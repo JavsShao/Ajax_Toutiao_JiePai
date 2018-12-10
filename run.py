@@ -75,3 +75,15 @@ def save_image(item):
                 print("图片已经下载了，无需再下载！", file_path)
     except requests.ConnectionError:
         print('图片下载失败')
+
+def main(offset):
+    '''
+    控制页数
+    :param offset:
+    :return:
+    '''
+    json = get_page(offset)
+    for item in get_images(json):
+        print(item)
+        save_image(item)
+
