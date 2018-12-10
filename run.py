@@ -8,7 +8,7 @@ from multiprocessing.pool import Pool
 
 def get_page(offset):
     '''
-    解析源码
+    获取源码
     :param offset:
     :return:
     '''
@@ -30,3 +30,21 @@ def get_page(offset):
     except requests.ConnectionError as e:
         print(e.args)
         return None
+
+def get_images(json):
+    '''
+    解析源码
+    :param json:
+    :return:
+    '''
+    if json.get('data'):
+        for item in json.get('data'):
+            if item.get('cell_type') is not None:
+                continue
+            title = item.get('title')
+            images = item.get('image_list')
+            for image in images:
+                yield {
+                    'image':'https' + image.get('url'),
+                    'title':title
+                }
