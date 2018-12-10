@@ -48,3 +48,30 @@ def get_images(json):
                     'image':'https' + image.get('url'),
                     'title':title
                 }
+
+def save_image(item):
+    '''
+    保存图片
+    :param item:
+    :return:
+    '''
+    # 创建文件夹
+    img_path = 'img' + os.path.sep + item.get('title')
+    if not os.path.exists(img_path):
+        os.makedirs(img_path)
+
+    try:
+        response = requests.get(item.get('image'))
+        if response.status_code == 200:
+            file_path = img_path + os.path.sep + '{file_name}.{file_suffix}'.format(
+                file_name = md5(response.content).hexdigest(),
+                file_suffix = 'jpg'
+            )
+            if not os.path.exists(file_path):
+                with open(file_path, "wb") as f:
+                    f.write(response.content)
+                    print("图片下载成功！")
+            else:
+                print("图片已经下载了，无需再下载！", file_path)
+    except requests.ConnectionError:
+        print('图片下载失败')
